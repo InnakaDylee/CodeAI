@@ -13,8 +13,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("Cannot load .env file. Err: %s", err)
 	}
-
-	routes.RouteInit()
 	drivers.Init()
+	routes.RouteInit()
+	
 
 }

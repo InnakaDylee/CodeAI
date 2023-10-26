@@ -21,10 +21,12 @@ func RouteInit(){
         log.Fatal("Token open ai tidak ditemukan. Pastikan Anda mengatur OPENAI_TOKEN.")
     }
 
-	repo := repository.NewBotRepository(drivers.DB)
-    botService := services.NewBotService(*repo ,botToken)
+	botRepo := repository.NewBotRepository(drivers.DB)
+	userRepo := repository.NewUserRepository(drivers.DB)
+    botService := services.NewBotService(*botRepo ,botToken)
 	openAiService := services.NewCodeService(openAiToken)
-    handler := handler.NewBotHandler(botService,openAiService)
+	userService := services.NewUserService(*userRepo)
+    handler := handler.NewBotHandler(botService,openAiService,userService)
 
 	e := echo.New()
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"code-ai/models/domain"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/gorm"
+	"gorm.io/driver/mysql"
 )
 
 
@@ -24,7 +24,7 @@ func LoadConfig() Config {
 		DB_Password: "",
 		DB_Port:     "3306",
 		DB_Host:     "127.0.0.1",
-		DB_Name:     "clean_arch",
+		DB_Name:     "mini_project",
 	}
 
 }
@@ -50,12 +50,12 @@ func InitDB() {
 	)
 
 	var err error
-	DB, err = gorm.Open("mysql", connectionString)
+	DB, err = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
 }
 
 func InitialMigration() {
-	DB.AutoMigrate(&domain.Message{})
+	DB.AutoMigrate(&domain.Message{}, &domain.User{})
 }
