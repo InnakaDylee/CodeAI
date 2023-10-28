@@ -26,7 +26,7 @@ func RouteInit(){
     botService := services.NewBotService(*botRepo ,botToken)
 	openAiService := services.NewCodeService(openAiToken)
 	userService := services.NewUserService(*userRepo)
-    handler := handler.NewBotHandler(botService,openAiService,userService)
+    handler := handler.NewBotHandler(*botService,openAiService,userService)
 
 	e := echo.New()
 

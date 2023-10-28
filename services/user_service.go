@@ -3,6 +3,7 @@ package services
 import (
 	"code-ai/models/domain"
 	"code-ai/repository"
+	"fmt"
 )
 
 type UserService struct {
@@ -12,7 +13,7 @@ type UserService struct {
 type UserServiceImp interface {
 	CreateUser(user *domain.User) (*domain.User, error)
 	FindUserByID(id int64) (*domain.User, error)
-	AddLimitText(userID int64, userTextCount int64) (*domain.User, error)
+	ReduceLimitText(userID int64, userTextCount int64) (*domain.User, error)
 }
 
 func NewUserService(repo repository.UserRepository) *UserService {
@@ -30,6 +31,7 @@ func (use *UserService) FindUserByID(id int64) (*domain.User, error) {
 }
 
 func (use *UserService) CreateUser(user *domain.User) (*domain.User, error) {
+	fmt.Println("test")
 	user, err := use.UserRepository.CreateUser(user)
 	if err != nil {
 		return nil, err
@@ -37,8 +39,8 @@ func (use *UserService) CreateUser(user *domain.User) (*domain.User, error) {
 	return user, nil
 }
 
-func (use *UserService) AddLimitText(userID int64, userTextCount int64) (*domain.User, error) {
-	user, err := use.UserRepository.AddLimitText(userID, userTextCount)
+func (use *UserService) ReduceLimitText(userID int64, userTextCount int64) (*domain.User, error) {
+	user, err := use.UserRepository.ReduceLimitText(userID, userTextCount)
 	if err != nil {
 		return nil, err
 	}
