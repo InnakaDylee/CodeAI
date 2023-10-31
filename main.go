@@ -3,7 +3,9 @@ package main
 import (
 	"code-ai/drivers"
 	"code-ai/routes"
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -21,5 +23,7 @@ func main() {
 	routes.BotRouteInit(e,DB)
 	routes.AdminRouteInit(e,DB)	
 
-	e.Logger.Fatal(e.Start(":3334"))
+	port := os.Getenv("PORT")
+	setPort := fmt.Sprintf(":%s", port)
+	e.Logger.Fatal(e.Start(setPort))
 }
