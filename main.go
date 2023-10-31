@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
 )
 
 func main() {
@@ -13,8 +14,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("Cannot load .env file. Err: %s", err)
 	}
-	drivers.Init()
-	routes.RouteInit()
-	
+	e := echo.New()
 
+	DB := drivers.InitDB()
+
+	routes.BotRouteInit(e,DB)
+	routes.AdminRouteInit(e,DB)	
+
+	e.Logger.Fatal(e.Start(":3334"))
 }
