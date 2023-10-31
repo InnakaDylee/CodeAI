@@ -12,7 +12,7 @@ type BotService struct {
     Bot        *tgbotapi.BotAPI
 }
 
-type BotServiceImp interface {
+type BotServiceInterface interface {
     SendMessage(chatID int64, text string) (*domain.Message, error)
     InitializeBot(token string) error
 	SaveMessage(chatID int64, name, text string) (*domain.Message, error)	

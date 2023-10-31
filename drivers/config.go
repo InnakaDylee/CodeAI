@@ -1,13 +1,14 @@
 package drivers
 
 import (
-	"fmt"
 	"code-ai/models/domain"
+	"code-ai/models/schema"
+	"fmt"
+	"os"
 
-	"gorm.io/gorm"
 	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
-
 
 type Config struct {
 	DB_Username string
@@ -20,24 +21,18 @@ type Config struct {
 func LoadConfig() Config {
 
 	return Config{
-		DB_Username: "root",
-		DB_Password: "",
-		DB_Port:     "3306",
-		DB_Host:     "127.0.0.1",
-		DB_Name:     "mini_project",
+		DB_Username: os.Getenv("DB_USERNAME"),
+		DB_Password: os.Getenv("DB_PASSWORD"),
+		DB_Port:     os.Getenv("DB_PORT"),
+		DB_Host:     os.Getenv("DB_HOST"),
+		DB_Name:     os.Getenv("DB_NAME"),
 	}
 
 }
-  
-  
+
 var DB *gorm.DB
 
-func Init() {
-	InitDB()
-	InitialMigration()
-}
-
-func InitDB() {
+func InitDB() *gorm.DB {
 
 	config := LoadConfig()
 
@@ -54,8 +49,11 @@ func InitDB() {
 	if err != nil {
 		panic(err)
 	}
+
+	InitialMigration()
+	return DB
 }
 
 func InitialMigration() {
-	DB.AutoMigrate(&domain.Message{}, &domain.User{})
+	DB.AutoMigrate(&domain.User{}, &domain.Message{}, &schema.Admin{})
 }

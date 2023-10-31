@@ -5,10 +5,9 @@ import (
 	"strings"
 
 	"github.com/go-playground/validator"
-	"github.com/labstack/echo/v4"
 )
 
-func ValidationError(ctx echo.Context, err error) error {
+func ValidationError( err error) error {
 	validationError, ok := err.(validator.ValidationErrors)
 	if ok {
 		messages := make([]string, 0)

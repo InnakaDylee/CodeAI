@@ -4,14 +4,14 @@ import (
 	"code-ai/handler"
 	"code-ai/repository"
 	"code-ai/services"
-	"code-ai/drivers"
 	"log"
 	"os"
 
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
-func RouteInit(){
+func BotRouteInit(e *echo.Echo, DB *gorm.DB){
 	botToken := os.Getenv("BOT_TOKEN")
     if botToken == "" {
         log.Fatal("Token bot tidak ditemukan. Pastikan Anda mengatur BOT_TOKEN.")
@@ -21,14 +21,12 @@ func RouteInit(){
         log.Fatal("Token open ai tidak ditemukan. Pastikan Anda mengatur OPENAI_TOKEN.")
     }
 
-	botRepo := repository.NewBotRepository(drivers.DB)
-	userRepo := repository.NewUserRepository(drivers.DB)
+	botRepo := repository.NewBotRepository(DB)
+	userRepo := repository.NewUserRepository(DB)
     botService := services.NewBotService(*botRepo ,botToken)
 	openAiService := services.NewCodeService(openAiToken)
 	userService := services.NewUserService(*userRepo)
     handler := handler.NewBotHandler(*botService,openAiService,userService)
-
-	e := echo.New()
 
 	e.GET("/",func(c echo.Context) error {
 		return c.JSON(200,map[string]interface{}{
@@ -38,5 +36,4 @@ func RouteInit(){
 	})
 	e.POST("/webhook",handler.HandleBot)
 
-	e.Logger.Fatal(e.Start(":3333"))
 }

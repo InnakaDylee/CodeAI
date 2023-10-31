@@ -5,7 +5,7 @@ import (
 	openai "github.com/sashabaranov/go-openai"
 )
 
-type CodeService interface {
+type CodeServiceInterface interface {
 	CodeGenerator(userInput string) (string, error)
 }
 
@@ -13,7 +13,7 @@ type codeService struct{
 	Token string
 }
 
-func NewCodeService(token string) CodeService {
+func NewCodeService(token string) CodeServiceInterface {
 	return &codeService{
 		Token: token,
 	}
@@ -42,12 +42,7 @@ func (cs *codeService) CodeGenerator(userInput string) (string, error) {
 	return answer, nil
 }
 
-func (cs *codeService) getCompletionFromMessages(
-	ctx context.Context,
-	client *openai.Client,
-	messages []openai.ChatCompletionMessage,
-	model string,
-) (openai.ChatCompletionResponse, error) {
+func (cs *codeService) getCompletionFromMessages(ctx context.Context, client *openai.Client, messages []openai.ChatCompletionMessage, model string,) (openai.ChatCompletionResponse, error) {
 	if model == "" {
 		model = openai.GPT3Dot5Turbo
 	}

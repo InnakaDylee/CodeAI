@@ -39,9 +39,9 @@ func (r *UserRepository) CreateUser(user *domain.User) (*domain.User, error) {
 	return user, nil
 }
 
-func (r *UserRepository) ReduceLimitText(userID int64,userTextCount int64) (*domain.User, error) {
+func (r *UserRepository) ReduceLimitText(userID int64,userCredit int64) (*domain.User, error) {
 	var user domain.User
-	err := r.db.Model(&user).Where("id = ?", userID).Update("text_count", userTextCount - 1).Error
+	err := r.db.Model(&user).Where("id = ?", userID).Update("credit", userCredit - 1).Error
 	if err != nil {
 		return nil, err
 	}

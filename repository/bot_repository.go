@@ -10,14 +10,14 @@ type BotRepository struct {
 	db *gorm.DB
 }
 
+type BotRepositoryInterface interface {
+	SaveMessage(chatID int64, name, text string) (*domain.Message, error)
+}
+
 func NewBotRepository(db *gorm.DB) *BotRepository {
 	return &BotRepository{
 		db,
 	}
-}
-
-type BotRepositoryImp interface {
-	SaveMessage(chatID int64, name, text string) (*domain.Message, error)
 }
 
 func (r *BotRepository) SaveMessage(chatID int64, name, text string) (*domain.Message, error) {
