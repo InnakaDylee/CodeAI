@@ -49,7 +49,6 @@ func (r *AdminRepository) FindAllAdmin() ([]domain.Admin, error) {
 
 func (r *AdminRepository) FindAdminByEmail(email string) (*domain.Admin, error) {
 	var admin domain.Admin
-	fmt.Println(email)
 	err := r.db.First(&admin, "email = ?", email).Error
 	if err != nil {
 		return nil, err

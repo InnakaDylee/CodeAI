@@ -35,8 +35,6 @@ func NewAdminService(repo repository.AdminRepository, validate *validator.Valida
 }
 
 func (as *AdminService) CreateAdminService(request web.AdminCreateRequest) (*domain.Admin, error) {
-	fmt.Println("line________________________________________")
-	fmt.Println("line2________________________________________")
 	existingAdmin, _ := as.AdminRepo.FindAdminByEmail(request.Email)
 	if existingAdmin != nil {
 		return nil, fmt.Errorf("email already exist")

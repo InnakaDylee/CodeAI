@@ -6,48 +6,56 @@ import (
 	"code-ai/models/web"
 )
 
-func AdminDomainToAdminLoginResponse(user *domain.Admin) web.AdminLoginResponse {
+func AdminDomainToAdminLoginResponse(admin *domain.Admin) web.AdminLoginResponse {
 	return web.AdminLoginResponse{
-		Name:  user.Name,
-		Email: user.Email,
+		Name:  admin.Name,
+		Email: admin.Email,
 	}
 }
 
-func AdminSchemaToAdminDomain(user *schema.Admin) *domain.Admin {
-	return &domain.Admin{
-		ID:       user.ID,
-		Name:     user.Name,
-		Email:    user.Email,
-		Password: user.Password,
-	}
-}
-
-func AdminDomaintoAdminResponse(user *domain.Admin) web.AdminReponse {
+func AdminDomainToAdminResponse(admin *domain.Admin) web.AdminReponse {
 	return web.AdminReponse{
-		Id:    user.ID,
-		Name:  user.Name,
-		Email: user.Email,
+		Id:    admin.ID,
+		Name:  admin.Name,
+		Email: admin.Email,
 	}
 }
 
-func UpdateAdminDomaintoAdminResponse(id uint, user *domain.Admin) web.UpdateAdminReponse {
+func AdminSchemaToAdminDomain(admin *schema.Admin) *domain.Admin {
+	return &domain.Admin{
+		ID:       admin.ID,
+		Name:     admin.Name,
+		Email:    admin.Email,
+		Password: admin.Password,
+	}
+}
+
+func AdminDomaintoAdminResponse(admin *domain.Admin) web.AdminReponse {
+	return web.AdminReponse{
+		Id:    admin.ID,
+		Name:  admin.Name,
+		Email: admin.Email,
+	}
+}
+
+func UpdateAdminDomaintoAdminResponse(id uint, admin *domain.Admin) web.UpdateAdminReponse {
 	return web.UpdateAdminReponse{
 		Id:       id,
-		Name:     user.Name,
-		Email:    user.Email,
-		Password: user.Password,
+		Name:     admin.Name,
+		Email:    admin.Email,
+		Password: admin.Password,
 	}
 }
 
-func ConvertAdminResponse(users []domain.Admin) []web.AdminReponse {
+func ConvertAdminResponse(admins []domain.Admin) []web.AdminReponse {
 	var results []web.AdminReponse
-	for _, user := range users {
-		userResponse := web.AdminReponse{
-			Id:    user.ID,
-			Name:  user.Name,
-			Email: user.Email,
+	for _, admin := range admins {
+		adminResponse := web.AdminReponse{
+			Id:    admin.ID,
+			Name:  admin.Name,
+			Email: admin.Email,
 		}
-		results = append(results, userResponse)
+		results = append(results, adminResponse)
 	}
 	return results
 }

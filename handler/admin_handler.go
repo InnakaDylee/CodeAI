@@ -54,7 +54,7 @@ func (ah *AdminHandler) RegisterAdminHandler(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Sign Up Error"))
 	}
 
-	response := res.AdminDomainToAdminLoginResponse(result)
+	response := res.AdminDomainToAdminResponse(result)
 
 	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Sign Up", response))
 }
