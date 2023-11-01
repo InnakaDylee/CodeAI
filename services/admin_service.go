@@ -91,7 +91,7 @@ func (as *AdminService) FindAdminByEmailService(email string) (*domain.Admin, er
 func (as *AdminService) FindUserByUsernameService(username string) (*domain.User, error) {
 	user, err := as.AdminRepo.FindUserByUsername(username)
 	if err != nil {
-		return nil, fmt.Errorf("admins not found")
+		return nil, fmt.Errorf("user not found")
 	}
 	return user, nil
 }
@@ -99,7 +99,7 @@ func (as *AdminService) FindUserByUsernameService(username string) (*domain.User
 func (as *AdminService) FindAllUserService() ([]domain.User, error) {
 	user, err := as.AdminRepo.FindAllUser()
 	if err != nil {
-		return nil, fmt.Errorf("admins not found")
+		return nil, fmt.Errorf("users not found")
 	}
 	return user, nil
 }
@@ -108,7 +108,7 @@ func (as *AdminService) UpdateUserService(userID int, user web.UserUpdateRequest
 	userUpdate := req.UserUpdateRequestToUserDomain(user)
 	result, err := as.AdminRepo.UpdateUser(userID, userUpdate)
 	if err != nil {
-		return nil, fmt.Errorf("admins not found")
+		return nil, fmt.Errorf("user not found")
 	}
 	return result, nil
 }
@@ -116,7 +116,7 @@ func (as *AdminService) UpdateUserService(userID int, user web.UserUpdateRequest
 func (as *AdminService) DeleteUserService(userID int) error {
 	err := as.AdminRepo.DeleteUser(userID)
 	if err != nil {
-		return fmt.Errorf("admins not found")
+		return fmt.Errorf("user not found")
 	}
 	return nil
 }

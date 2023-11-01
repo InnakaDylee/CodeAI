@@ -95,7 +95,7 @@ func (ah *AdminHandler) FindAdminByEmailHandler(ctx echo.Context) error {
 
 	result, err := ah.AdminService.FindAdminByEmailService(email)
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Internal Server Error"))
+		return ctx.JSON(http.StatusNotFound, helper.ErrorResponse("Admin Not Found"))
 	}
 
 	response := res.AdminDomaintoAdminResponse(result)
@@ -119,7 +119,7 @@ func (ah *AdminHandler) FindUserByUsernameHandler(ctx echo.Context) error {
 
 	result, err := ah.AdminService.FindUserByUsernameService(username)
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Internal Server Error"))
+		return ctx.JSON(http.StatusNotFound, helper.ErrorResponse("User Not Found"))
 	}
 
 	response := res.UserDomaintoUserResponse(result)
@@ -137,7 +137,7 @@ func (ah *AdminHandler) UpdateUserHandler(ctx echo.Context) error {
 
 	result, err := ah.AdminService.UpdateUserService(userID, userUpdateRequest)
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Internal Server Error"))
+		return ctx.JSON(http.StatusNotFound, helper.ErrorResponse("User Not Found"))
 	}
 
 	response := res.UpdateUserDomaintoUserResponse(userID, result)
