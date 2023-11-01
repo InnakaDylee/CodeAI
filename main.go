@@ -12,10 +12,13 @@ import (
 )
 
 func main() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Cannot load .env file. Err: %s", err)
-	}
+	 _, err := os.Stat(".env")
+    if err == nil {
+        err := godotenv.Load()
+        if err != nil {
+            log.Fatal("Failed to fetch .env file")
+        }
+    }
 	e := echo.New()
 
 	DB := drivers.InitDB()
