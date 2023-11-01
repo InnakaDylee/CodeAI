@@ -29,10 +29,14 @@ func CreateToken(userId int, name string) string {
 	// create token with claims (header)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
 
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatal("Error loading .env file")
-		os.Exit(1)
-	}
+
+	_, err := os.Stat(".env")
+    if err == nil {
+        if err := godotenv.Load(".env"); err != nil {
+			log.Fatal("Error loading .env file")
+			os.Exit(1)
+		}
+    }
 	// generate encoded token using the SECRET_KEY environment variable (signature)
 	validToken, _ := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
 	return validToken
