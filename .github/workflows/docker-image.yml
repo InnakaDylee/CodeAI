@@ -40,7 +40,7 @@ jobs:
             sudo docker stop ${{ secrets.CNAME }}
             sudo docker rm ${{ secrets.CNAME }}
             sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/dylee
-            sudo docker run --name ${{ secrets.CNAME }} -p 80:80 -d \
+            sudo docker run --name ${{ secrets.CNAME }} -p 443:443 -d \
             -e DB_HOST=${{ secrets.DB_HOST }} \
             -e DB_PORT=${{ secrets.DB_PORT }} \
             -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
